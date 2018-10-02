@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>  
+	<head>    
+		<title>Publisher Report</title>    	
+	</head>  
+<body>
+
+	<h2>Publisher Report</h2>
+    <table border="1">
+            {% for publisherColName in publisherColName %}
+                <th> {{publisherColName}} </th>
+            {% endfor %}
+            {% for publisher_summary in publisher_summary %}
+            <tr>		
+                {% for item in publisher_summary%}
+                <td>
+                    {{item}}
+                </td>
+                {% endfor %}		
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <form action = "/"  >
+            <input type = "submit" value = "Home" >
+        </form>
+</body>
+</html>

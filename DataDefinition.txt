@@ -1,0 +1,121 @@
+-- Schema: assignement
+
+-- DROP SCHEMA assignement;
+SET SEARCH_PATH TO assignment;
+CREATE SCHEMA assignment
+  AUTHORIZATION dxe15gxu;
+  
+  CREATE TABLE assignment.Category
+(
+	CategoryID		INTEGER,
+	Name			VARCHAR(50),
+	CategoryType 	VARCHAR(20)
+)
+/* Set CategoryID as the primary key*/
+ALTER TABLE assignment.Category ADD PRIMARY KEY(CategoryID);
+/* All entities must be Not Null*/
+ALTER TABLE assignment.Category ALTER COLUMN CategoryID SET NOT NULL;
+ALTER TABLE assignment.Category ALTER COLUMN Name SET NOT NULL;
+ALTER TABLE assignment.Category ALTER COLUMN CategoryType SET NOT NULL;
+/* Only accept fiction or non-fiction both begin with upcase or lowcase*/
+ALTER TABLE assignment.Category ADD CONSTRAINT chk_type CHECK(CategoryType ='Fiction' OR CategoryType = 'Non-fiction' 
+OR CategoryType = 'non-fiction' OR CategoryType = 'fiction');
+
+CREATE TABLE assignment.SalesRep
+(
+	SalesRepID		INTEGER,
+	Name			VARCHAR(50)
+)
+
+/* Ser SalesRepID as the primary key*/
+ALTER TABLE assignment.SalesRep ADD PRIMARY KEY(SalesRepID);
+/* All entities must be Not Null*/
+ALTER TABLE assignment.SalesRep ALTER COLUMN SalesRepID SET NOT NULL;
+ALTER TABLE assignment.SalesRep ALTER COLUMN Name SET NOT NULL;
+
+CREATE TABLE assignment.Shop
+(
+	ShopID		INTEGER,
+	Name			VARCHAR(50)
+)
+
+/* Set ShopID as the primary key*/
+ALTER TABLE assignment.Shop ADD PRIMARY KEY(ShopID);
+/* All entities must be Not Null*/
+ALTER TABLE assignment.Shop ALTER COLUMN ShopID SET NOT NULL;
+ALTER TABLE assignment.Shop ALTER COLUMN Name SET NOT NULL;
+
+CREATE TABLE assignment.Publisher
+(
+	PublisherID		INTEGER,
+	Name			VARCHAR(50)
+)
+
+/* Set PublisherID as the primary key*/
+ALTER TABLE assignment.Publisher ADD PRIMARY KEY(PublisherID);
+/* All entities must be Not Null*/
+ALTER TABLE assignment.Publisher ALTER COLUMN PublisherID SET NOT NULL;
+ALTER TABLE assignment.Publisher ALTER COLUMN Name SET NOT NULL;
+
+CREATE TABLE assignment.Book
+(
+	BookID			INTEGER,
+	Title			VARCHAR(50),
+	Price			DECIMAL(10,2),
+	CategoryID		INTEGER,
+	PublisherID		INTEGER
+)
+
+/* Set PublisherID as the primary key*/
+ALTER TABLE assignment.Book ADD PRIMARY KEY(BookID);
+/* Set CategoryID and PublisherID as foreign key and on delete cascade*/
+ALTER TABLE assignment.Book ADD FOREIGN KEY(CategoryID) REFERENCES assignment.Category(CategoryID) ON DELETE CASCADE;
+ALTER TABLE assignment.Book ADD FOREIGN KEY(PublisherID) REFERENCES assignment.Publisher(PublisherID) ON DELETE CASCADE;
+/* All entities must be Not Null*/
+ALTER TABLE assignment.Book ALTER COLUMN BookID SET NOT NULL;
+ALTER TABLE assignment.Book ALTER COLUMN Title SET NOT NULL;
+ALTER TABLE assignment.Book ALTER COLUMN Price SET NOT NULL;
+ALTER TABLE assignment.Book ALTER COLUMN CategoryID SET NOT NULL;
+ALTER TABLE assignment.Book ALTER COLUMN PublisherID SET NOT NULL;
+/* Constraint to check the book price must between 0 to 500*/
+ALTER TABLE assignment.Book ADD CONSTRAINT chk_price CHECK(Book.Price >= 0 AND Book.Price < 500);
+
+CREATE TABLE assignment.ShopOrder
+(
+	ShopOrderID		INTEGER,
+	OrderDate		DATE,
+	ShopID			INTEGER,
+	SalesRepID		INTEGER
+)
+
+/* Set ShopOrderID as primary key*/
+ALTER TABLE assignment.ShopOrder ADD PRIMARY KEY(ShopOrderID);
+/* Set ShopID and SalesRepIS as foreign key and on delete cascade*/
+ALTER TABLE assignment.ShopOrder ADD FOREIGN KEY(ShopID) REFERENCES assignment.Shop(ShopID) ON DELETE CASCADE;
+ALTER TABLE assignment.ShopOrder ADD FOREIGN KEY(SalesRepID) REFERENCES assignment.SalesRep(SalesRepID) ON DELETE CASCADE;
+/* All entities must be Not Null*/
+ALTER TABLE assignment.ShopOrder ALTER COLUMN ShopOrderID SET NOT NULL;
+ALTER TABLE assignment.ShopOrder ALTER COLUMN OrderDate SET NOT NULL;
+ALTER TABLE assignment.ShopOrder ALTER COLUMN ShopID SET NOT NULL;
+ALTER TABLE assignment.ShopOrder ALTER COLUMN SalesRepID SET NOT NULL;
+
+CREATE TABLE assignment.Orderline
+(
+	ShopOrderID		INTEGER,
+	BookID			INTEGER,
+	Quantity		INTEGER,
+	UnitSellingPrice	DECIMAL (10,2)
+)
+
+/* Set ShopOderID and BookID as foreign key and on delete cascade*/
+ALTER TABLE assignment.Orderline ADD FOREIGN KEY(ShopOrderID) REFERENCES assignment.ShopOrder(ShopOrderID) ON DELETE CASCADE;
+ALTER TABLE assignment.Orderline ADD FOREIGN KEY(BookID) REFERENCES assignment.Book(BookID) ON DELETE CASCADE;
+/* All entities must be Not Null*/
+ALTER TABLE assignment.Orderline ALTER COLUMN ShopOrderID SET NOT NULL;
+ALTER TABLE assignment.Orderline ALTER COLUMN BookID SET NOT NULL;
+ALTER TABLE assignment.Orderline ALTER COLUMN Quantity SET NOT NULL;
+ALTER TABLE assignment.Orderline ALTER COLUMN UnitSellingPrice SET NOT NULL;
+/*Conbine ShopOrderID and BookID as a primary key*/
+ALTER TABLE assignment.Orderline ADD CONSTRAINT Orderline_pk PRIMARY KEY (ShopOrderID,BookID);
+/*Constraint Check the order quantity must more than 1*/
+ALTER TABLE assignment.Orderline ADD CONSTRAINT chk_qnty CHECK(Quantity >= 1);

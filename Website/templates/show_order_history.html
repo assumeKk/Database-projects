@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>  
+	<head>    
+		<title>Order History</title>    	
+	</head>  
+<body>
+	<h2>Order History</h2>
+    <table border="1">
+            {% for orderHistoryColName in orderHistoryColName %}
+                <th> {{orderHistoryColName}} </th>
+            {% endfor %}
+            {% for order_history in order_history %}
+            <tr>		
+                {% for item in order_history%}
+                <td>
+                    {{item}}
+                </td>
+                {% endfor %}		
+            </tr>
+            {% endfor %}
+        </table>
+
+	<h2>Total Summary</h2>
+    <table border="1">
+            {% for order_History_Summary_ColName in order_History_Summary_ColName %}
+                <th> {{order_History_Summary_ColName}} </th>
+            {% endfor %}
+            {% for order_history_summary in order_history_summary %}
+            <tr>		
+                {% for item in order_history_summary%}
+                <td>
+                    {{item}}
+                </td>
+                {% endfor %}		
+            </tr>
+            {% endfor %}
+        </table>
+
+        <form action = "/"  >
+            <input type = "submit" value = "Home" >
+        </form>
+</body>
+</html>

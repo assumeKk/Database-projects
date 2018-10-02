@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>  
+	<head>    
+		<title>Home Page</title>    	
+	</head>  
+<body>
+	<h2>Add new Category</h2>
+    <form action = "add_new_category" method = "post" >
+    	Category   ID <input type = "text" name = "category_id" /><br>
+    	Category Name <input type = "text" name = "name" /><br>
+    	Category Type <input type = "type" name = "category_type" /><br>
+		<input type = "submit" value = "Add new category" />
+	</form>
+
+    <h2>Show all Categories</h2>
+	<form action = "show_category" method = "get" >
+		<input type = "submit" value = "Show Category" />
+	</form>
+
+	<hr>
+    <h2>Enter Category to Delete category</h2>
+	<form action = "delete_category" method = "post" >
+		Category ID <input type = "text" name = "category_id" /><br>
+		<input type = "submit" value = "Delete Category" />
+	</form>
+
+	<hr>
+    <h2>Show report for available books</h2>
+	<form action = "show_available_books" method = "get" >
+		<input type = "submit" value = "Show Books Available" />
+	</form>
+
+    <hr>
+    <h2>Enter Publisher name to show ordered books</h2>
+	<form action = "publisher_report" method = "get" >
+		Publisher Name <input type = "text" name = "publisher_name" /><br>
+		<input type = "submit" value = "Publisher Report Summary " />
+	</form>
+	<hr>
+
+    <h2>Enter Book ID to Show book Order history</h2>
+	<form action = "order_history" method = "get" >
+		Book ID <input type = "text" name = "book_id" /><br>
+		<input type = "submit" value = "Order History " />
+	</form>
+    <hr>
+
+    <h2>Enter Dates to show sale history for each Sales Rep</h2>
+	<form action = "sells_rep_report" method = "get" >
+	    From Date <input type="date" name="from_date" placeholder="yyyy-mm-dd"><br>
+	    End Date <input type="date" name="end_date" placeholder="yyyy-mm-dd"><br>
+		<input type = "submit" value = "Check" />
+	</form>
+	<hr>
+
+    <h2>Enter a category ID and percentage(0-100) to apply discount</h2>
+    <form action = "apply_discount" method = "post" >
+    	Category ID <input type = "text" name = "category_id" /><br>
+    	Discount Percentage <input type = "text" name = "discount" /><br>
+		<input type = "submit" value = "Apply Discount" />
+	</form>
+	<hr>
+
+
+	<h1>
+	{{msg}}<br>
+	{{error}}
+	</h1>
+</body>
+</html>

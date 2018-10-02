@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>  
+	<head>    
+		<title>Available Books</title>    	
+	</head>  
+<body>
+	<h2>Available Books</h2>
+    <table border="1">
+            {% for availableColName in availableColName %}
+                <th> {{availableColName}} </th>
+            {% endfor %}
+            {% for available_books in available_books %}
+            <tr>		
+                {% for item in available_books%}
+                <td>
+                    {{item}}
+                </td>
+                {% endfor %}		
+            </tr>
+            {% endfor %}
+        </table>
+	<h2>Summary Total</h2>
+    <table border="1">
+            {% for totalColName in totalColName %}
+                <th> {{totalColName}} </th>
+            {% endfor %}
+            {% for available_books_summary in available_books_summary %}
+            <tr>		
+                {% for item in available_books_summary%}
+                <td>
+                    {{item}}
+                </td>
+                {% endfor %}		
+            </tr>
+            {% endfor %}
+        </table>
+
+        
+        <form action = "/"  >
+            <input type = "submit" value = "Home" >
+        </form>
+   
+</body>
+</html>
